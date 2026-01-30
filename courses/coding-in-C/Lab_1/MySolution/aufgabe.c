@@ -19,6 +19,7 @@ int main(){
         status=(status>>1);
     }
     printf("Messwert: %d",wert);
+    printf("Hallo das ist eion Test");
     return 0;
  
 }
