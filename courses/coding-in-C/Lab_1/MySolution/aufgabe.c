@@ -1,5 +1,5 @@
 #include <stdio.h>
-unsigned char status=0xa7, pruefung=1, wert=0;
+unsigned char status=0xa8, pruefung=1, wert=0;
  
 int main(){
  
@@ -13,13 +13,11 @@ int main(){
                 case 5: printf("---Unterspannung---\n"); break;
                 case 6: printf("--Uebertemperatur--\n"); break;
                 case 7: printf("------Fehler-------\n"); break;
-            }
- 
+            } 
         }
         status=(status>>1);
     }
     printf("Messwert: %d",wert);
-    printf("Hallo das ist eion Test");
     return 0;
  
 }
