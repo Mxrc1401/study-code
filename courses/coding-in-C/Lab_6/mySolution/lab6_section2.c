@@ -19,7 +19,7 @@ void refuel(Car *p_car, float amount)
 
 int main(void)
 {
-    Car my_car = {5.0f, 50.0f, "CLA Coupe"};
+    Car my_car = {5.0f, 50.0f, "CLA"};
 
     refuel(&my_car, 30.0f);
 
