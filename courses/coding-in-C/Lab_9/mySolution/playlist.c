@@ -2,7 +2,7 @@
  * File: playlist.c
  * Description: Includes the code/logic for functions of playlist.h
  */
-#include "../include/playlist.h"
+#include "playlist.h"
 
 /**
  * @brief Initialize a new playlist
@@ -109,5 +109,98 @@ void delete_playlist(Playlist *playlist)
 {
     while (playlist->p_head)
         delete_firstSong(playlist);
+}
 
-        
+
+#include "playlist.h"
+
+//                         SECTION I                          //
+
+Song *find_song_by_title(Playlist *playlist, const char *title)
+{
+    Song *current = playlist->p_head;
+
+    while (current)
+    {
+        if (strcmp(current->title, title) == 0)
+        {
+            return current;
+        }
+        current = current->p_nextSong;
+    }
+
+    return NULL;
+}
+
+Song *find_song_recursive(Song *current, const char *title)
+{
+    if (current == NULL)
+    {
+        return NULL;
+    }
+
+    if (strcmp(current->title, title) == 0)
+    {
+        return current;
+    }
+
+    return find_song_recursive(current->p_nextSong, title);
+}
+
+
+//                         SECTION II                          //
+
+
+int count_songs_recursive(const Song *current)
+{
+    if (current == NULL)
+    {
+        return 0;
+    }
+
+    return 1 + count_songs_recursive(current->p_nextSong);
+}
+
+
+//                         SECTION III                         //
+
+
+static void swap_song_data(Song *a, Song *b)
+{
+    char *tmp_title = a->title;
+    char *tmp_artist = a->artist;
+
+    a->title = b->title;
+    a->artist = b->artist;
+
+    b->title = tmp_title;
+    b->artist = tmp_artist;
+}
+
+void sort_playlist_by_title(Playlist *playlist)
+{
+    if (!playlist->p_head)
+        return;
+
+    int swapped;
+    Song *ptr1;
+    Song *lptr = NULL;
+
+    do
+    {
+        swapped = 0;
+        ptr1 = playlist->p_head;
+
+        while (ptr1->p_nextSong != lptr)
+        {
+            if (strcmp(ptr1->title, ptr1->p_nextSong->title) > 0)
+            {
+                swap_song_data(ptr1, ptr1->p_nextSong);
+                swapped = 1;
+            }
+            ptr1 = ptr1->p_nextSong;
+        }
+        lptr = ptr1;
+
+    } while (swapped);
+}
