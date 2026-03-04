@@ -33,10 +33,6 @@ void print_playlist(const Playlist *playlist);
 void delete_firstSong(Playlist *playlist);
 void delete_playlist(Playlist *playlist);
 
-/* --- Algorithm Extensions --- */
-Song *find_song_by_title(Playlist *playlist, const char *title);
-Song *find_song_recursive(Song *current, const char *title);
-int count_songs_recursive(const Song *current);
-void sort_playlist_by_title(Playlist *playlist);
-
 #endif /* PLAYLIST_H */
+
+
