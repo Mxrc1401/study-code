@@ -57,3 +57,15 @@ Answer as comments in the code:
 - Where is the Interface Segregation Principle violated?
 - Why is `InjuredPlayer` problematic regarding the Liskov Substitution Principle?
 - Which concrete dependencies should be replaced by abstractions?
+
+---
+
+## Suggested Answers / Findings (refactor applied)
+
+- **Single Responsibility Principle:** `FootballManager` originally violated SRP because it handled strategy selection, training orchestration, persistence and notifications. After refactoring it now delegates persistence and notification to abstractions.
+- **Open/Closed Principle:** The original `select_strategy` used branching (`if/else`) which requires modification to add strategies. Refactor introduces a `Strategy` hierarchy so new strategies can be added with minimal changes.
+- **Interface Segregation Principle:** The original `ClubService` grouped training, saving and notifying into one interface; clients could be forced to depend on methods they don't need. Refactor introduces `IPlayerRepository` and `INotifier` abstractions to reduce coupling.
+- **Liskov Substitution Principle:** `InjuredPlayer::train` originally rejected intensities > 30 with an error message, breaking substitutability. The refactor changes `InjuredPlayer::train` to cap intensity to a safe maximum and perform recovery training, preserving the `Player` contract.
+- **Dependency Inversion Principle:** `FootballManager` originally depended on concrete `FilePlayerRepository` and `EmailNotifier`. Refactor replaces these with `IPlayerRepository` and `INotifier` abstractions and uses dependency injection (with a default owning constructor for convenience).
+
+Feel free to run and test the updated implementation. The refactor is contained entirely within `FootballManager.hpp` and `FootballManager.cpp` as requested.
